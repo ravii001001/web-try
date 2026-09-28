@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>root@cyber-hub:~#</title>
+    <!-- Importing Advanced Monospace Fonts -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Fira+Code:wght@400;700&family=Orbitron:wght@500;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Neon Cyberpunk Theme Variables */
+        :root {
+            --neon-green: #00FF66;
+            --neon-purple: #BD00FF;
+            --matrix-dim: #003311;
+            --bg-dark: #06020a;
+            --panel-bg: rgba(13, 6, 20, 0.9);
+            --scanline: rgba(189, 0, 255, 0.03);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Fira Code', monospace;
+            background-color: var(--bg-dark);
+            color: var(--neon-green);
+            padding: 20px;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* CRT Display Glass Tube Overlay Filter */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(var(--scanline) 50%, rgba(0, 0, 0, 0.4) 50%), linear-gradient(90deg, rgba(0, 255, 102, 0.03), rgba(0, 0, 0, 0), rgba(189, 0, 255, 0.03));
+            z-index: 9999;
+            background-size: 100% 4px, 6px 100%;
+            pointer-events: none;
+        }
+
+        /* Matrix Digital Rain Backdrop Canvas */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.25;
+        }
+
+        /* Main Structural Dashboard Grid Layout */
+        .dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 850px) {
+            .dashboard {
+                grid-template-columns: 1fr 2fr;
+            }
+        }
+
+        /* Reusable UI Module Panels */
+        .panel {
+            background-color: var(--panel-bg);
+            border: 2px solid var(--neon-purple);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(189, 0, 255, 0.2), inset 0 0 10px rgba(189, 0, 255, 0.1);
+            position: relative;
+        }
+
+        .panel-green-glow {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 20px rgba(0, 255, 102, 0.2), inset 0 0 10px rgba(0, 255, 102, 0.1);
+        }
+
+        /* Top Header Navigation Element */
+        header.panel {
+            grid-column: 1 / -1;
+            text-align: center;
+            border-bottom: 4px solid var(--neon-green);
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffffff;
+            font-size: 2.2rem;
+            letter-spacing: 4px;
+            text-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-green);
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: #ffffff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-bottom: 1px dashed var(--neon-purple);
+            padding-bottom: 5px;
+        }
+
+        /* System Security Bypass / Login Section */
+        .login-box {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .cyber-input {
+            background: #110518;
+            border: 1px solid var(--neon-purple);
+            color: #ffffff;
+            padding: 10px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            outline: none;
+            border-radius: 4px;
+        }
+
+        .cyber-input:focus {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 8px var(--neon-green);
+        }
+
+        .cyber-btn {
+            font-family: 'Orbitron', sans-serif;
+            background: transparent;
+            color: var(--neon-purple);
+            border: 2px solid var(--neon-purple);
+            padding: 10px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .cyber-btn:hover {
+            background: var(--neon-purple);
+            color: #ffffff;
+            box-shadow: 0 0 15px var(--neon-purple);
+        }
+
+        .cyber-btn.green {
+            color: var(--neon-green);
+            border-color: var(--neon-green);
+        }
+
+        .cyber-btn.green:hover {
+            background: var(--neon-green);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px var(--neon-green);
+        }
+
+        /* Console Log Terminal Window Component */
+        .terminal-log {
+            background: #000000;
+            border: 1px solid var(--matrix-dim);
+            height: 180px;
+            padding: 10px;
+            overflow-y: auto;
+            font-size: 0.85rem;
+            color: #88ff88;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        /* Custom Space Infiltrator Gaming Engine Container */
+        .game-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #000000;
+            border: 2px solid var(--neon-green);
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+
+        canvas {
+            background: #050505;
+            border: 1px solid var(--neon-green);
+            max-width: 100%;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 400px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        /* Interactive Blinking Cursor Terminal Prompter Node */
+        .blink { animation: flash 1s step-end infinite; }
+        @keyframes flash { 50% { opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <!-- Automated Animated Falling Data Matrix Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="dashboard">
+        
+        <!-- Header Panel Section -->
+        <header class="panel panel-green-glow">
+            <h1>CYBERNETIC_MAINFRAME_HUB v2.06</h1>
+            <p style="font-size: 0.85rem; color: var(--neon-purple); font-weight: bold; margin-top: 5px;">
+                STATUS: ENCRYPTED // OVERRIDE PROTOCOLS LOADED
+            </p>
+        </header>
+
+        <!-- Left Controls / System Admin Column -->
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+            
+            <!-- Secret Password Login System Node -->
+            <div class="panel" id="security-panel">
+                <h2>[SECURITY_BYPASS]</h2>
+                <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 15px;">Enter administrative passphrase override key to gain full root credentials.</p>
+                <div class="login-box">
+                    <input type="password" id="pass-input" class="cyber-input" placeholder="ACCESS_CODE...">
+                    <button class="cyber-btn" onclick="checkBypass()">Verify Passphrase</button>
+                </div>
+                <div id="auth-status" style="margin-top: 12px; font-weight: bold; font-size: 0.85rem; text-align: center;"></div>
+            </div>
+
+            <!-- Profile Portfolio Terminal Module -->
+            <div class="panel panel-green-glow">
+                <h2>[SYS_OPERATOR]</h2>
+                <div style="font-size: 0.9rem; line-height: 1.6; color: #ffffff;">
+                    <p style="margin-bottom: 10px;"><strong style="color: var(--neon-green);">ALIAS:</strong> GUEST_USER</p>
+                    <p style="margin-bottom: 10px;"><strong style="color: var(--neon-green);">ROLE:</strong> FULL_STACK_INTRUDER</p>
+                    <p><strong style="color: var(--neon-green);">SKILLS:</strong> HTML5, CSS3, JS, Matrix Node Infiltration, GitHub deployment scripts.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column - Gaming Hub Terminal Control Unit -->
+        <div class="panel panel-green-glow" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+                <h2>[ARCADE_CORE_DECRYPTOR]</h2>
+                
+                <!-- Live Infiltration Console Text Output Stream Container -->
+                <div class="terminal-log" id="term-box">
+                    <div>[SYS] System Initializing matrix node cluster... Ready.</div>
+                    <div>[SYS] Listening for arrow key commands on grid channel...</div>
+                </div>
+
+                <!-- Live Responsive Space Invader Minigame Component Block -->
+                <div class="game-wrapper">
+                    <div class="game-stats">
+                        <span>DATA_STOLEN: <span id="game-score" style="color: var(--neon-green);">0</span> MB</span>
+                        <span>GRID_SHIELD: <span id="game-lives" style="color: var(--neon-purple);">3</span></span>
+                    </div>
+                    <canvas id="gameCanvas" width="400" height="250"></canvas>
+                    <button class="cyber-btn green" style="width: 100%; max-width: 400px; margin-top: 10px;" onclick="initGame()">Reboot Core Simulation</button>
